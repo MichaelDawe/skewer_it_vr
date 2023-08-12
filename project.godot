@@ -1,0 +1,55 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Skewer It"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.1", "GL Compatibility")
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="res://textures/icon.png"
+
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=1024
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
+
+[editor]
+
+movie_writer/movie_file="C:/Users/micha/Desktop/movie.avi"
+movie_writer/fps=30
+
+[filesystem]
+
+import/blender/enabled=false
+import/fbx/enabled=false
+
+[gui]
+
+fonts/dynamic_fonts/use_oversampling=false
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=2
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+anti_aliasing/screen_space_roughness_limiter/enabled=false
+
+[xr]
+
+openxr/enabled=true
+openxr/reference_space=0
+shaders/enabled=true
