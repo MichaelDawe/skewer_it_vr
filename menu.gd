@@ -1,11 +1,13 @@
 extends Control
 
 var main
+var mainViewport
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# set main
 	main = get_node("/root/main")
+	mainViewport = get_node("/root/main/SubViewportContainer/SubViewport")
 	# highscore
 	if(FileAccess.file_exists("user://highscore.res")):
 		var file = FileAccess.open("user://highscore.res", FileAccess.READ)
@@ -26,20 +28,20 @@ func _on_play_pressed():
 		main.mode = 1
 		# load the hud scene
 		var hud = preload("res://hud.tscn").instantiate()
-		main.add_child(hud)
+		mainViewport.add_child(hud)
 		# run the play script on the main scene
 		main.play()
 	else:
 		# load the tutorial scene
 		var tutorial = preload("res://tutorial.tscn").instantiate()
-		main.add_child(tutorial)
+		mainViewport.add_child(tutorial)
 	# kill the menu scene
 	queue_free()
 
 
 func _on_options_pressed():
 	var options = preload("res://options.tscn").instantiate()
-	main.add_child(options)
+	mainViewport.add_child(options)
 	queue_free()
 
 

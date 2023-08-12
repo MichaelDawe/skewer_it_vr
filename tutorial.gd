@@ -17,7 +17,7 @@ func _on_close_pressed():
 	file.close()
 	# load the hud scene
 	var hud = preload("res://hud.tscn").instantiate()
-	get_node("/root/main").add_child(hud)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(hud)
 	# set main scene into play mode
 	get_node("/root/main").mode = 1
 	# run the play script on the main scene
@@ -31,5 +31,5 @@ func _on_menu_pressed():
 	file.store_var(true)
 	file.close()
 	var menu = preload("res://menu.tscn").instantiate()
-	get_node("/root/main").add_child(menu)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(menu)
 	queue_free()

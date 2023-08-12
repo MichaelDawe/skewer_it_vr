@@ -13,7 +13,7 @@ func _process(_delta):
 
 func _on_back_pressed():
 	var credits = preload("res://credits.tscn").instantiate()
-	get_node("/root/main").add_child(credits)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(credits)
 	queue_free()
 
 
@@ -78,5 +78,5 @@ License under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported
 )
 		5:
 			var credits = preload("res://credits.tscn").instantiate()
-			get_node("/root/main").add_child(credits)
+			get_node("/root/main/SubViewportContainer/SubViewport").add_child(credits)
 			queue_free()

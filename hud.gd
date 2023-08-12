@@ -1,6 +1,7 @@
 extends Control
 
-@onready var main = get_node("/root/main")
+@onready var main = get_node("/root/main") 
+@onready var mainViewport = get_node("/root/main/SubViewportContainer/SubViewport")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,7 +17,7 @@ func _on_pause_pressed():
 	main.mode = 2
 	# spawn pause menu
 	var pause = preload("res://pause.tscn").instantiate()
-	main.add_child.call_deferred(pause)
+	mainViewport.add_child.call_deferred(pause)
 	# save highscore to file
 	var highscore = 0
 	if(FileAccess.file_exists("user://highscore.res")):

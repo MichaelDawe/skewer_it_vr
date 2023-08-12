@@ -5,6 +5,7 @@ var speed = "error"
 var audioTxt = "error"
 var postEffects = 1
 @onready var main = get_node("/root/main")
+@onready var mainViewport = get_node("/root/main/SubViewportContainer/SubViewport")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,13 +38,13 @@ func _process(_delta):
 
 func _on_credits_pressed():
 	var credits = preload("res://credits.tscn").instantiate()
-	main.add_child(credits)
+	mainViewport.add_child(credits)
 	queue_free()
 
 
 func _on_back_pressed():
 	var menu = preload("res://menu.tscn").instantiate()
-	main.add_child(menu)
+	mainViewport.add_child(menu)
 	queue_free()
 
 
@@ -65,7 +66,7 @@ func _on_reset_score_pressed():
 
 func _on_tutorial_pressed():
 	var tutorial = preload("res://tutorial.tscn").instantiate()
-	main.add_child(tutorial)
+	mainViewport.add_child(tutorial)
 	queue_free()
 
 
@@ -117,5 +118,5 @@ func _on_audio_pressed():
 
 func _on_stats_pressed():
 	var stats = preload("res://Stats.tscn").instantiate()
-	main.add_child(stats)
+	mainViewport.add_child(stats)
 	queue_free()

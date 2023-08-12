@@ -14,7 +14,7 @@ func _process(_delta):
 func _on_menu_pressed():
 	get_node("/root/main").mode = 0
 	var menu = preload("res://menu.tscn").instantiate()
-	get_node("/root/main").add_child(menu)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(menu)
 	# run the play script on the main scene
 	get_node("/root/main").quit_to_menu()
 	queue_free()
@@ -22,6 +22,6 @@ func _on_menu_pressed():
 
 func _on_resume_pressed():
 	var hud = preload("res://hud.tscn").instantiate()
-	get_node("/root/main").add_child(hud)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(hud)
 	get_node("/root/main").mode = 1
 	queue_free()

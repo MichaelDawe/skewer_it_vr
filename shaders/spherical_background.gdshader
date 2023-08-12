@@ -8,7 +8,7 @@ shader_type spatial;
 render_mode unshaded;
 
 uniform vec3 background;
-//uniform float t;
+uniform float t;
 
 varying vec3 vertsPos;
 
@@ -26,9 +26,6 @@ void vertex() {
 }
 
 void fragment() {
-	// DEBUG
-	float t = TIME * 0.1;
-	
     float layers = 6.0;
     float scale = 25.0;
 	

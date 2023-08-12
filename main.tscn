@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=3 uid="uid://g54wi6rdpo70"]
+[gd_scene load_steps=109 format=3 uid="uid://g54wi6rdpo70"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_cqorg"]
 [ext_resource type="Shader" path="res://shaders/background.gdshader" id="2_vwy7a"]
@@ -46,6 +46,7 @@
 [ext_resource type="AudioStream" uid="uid://dmyk352cqu076" path="res://sounds/highscore.mp3" id="43_6cv70"]
 [ext_resource type="AudioStream" uid="uid://caeudvnb0w8lq" path="res://sounds/bad.mp3" id="44_f4r3q"]
 [ext_resource type="Script" path="res://Music.gd" id="45_qf52m"]
+[ext_resource type="Script" path="res://ray_mouse.gd" id="47_bls1o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qbt2q"]
 render_priority = 0
@@ -62,6 +63,7 @@ size = Vector2(2, 2)
 render_priority = 0
 shader = ExtResource("4_j508n")
 shader_parameter/background = Vector3(0, 0.2, 0.6)
+shader_parameter/t = null
 
 [sub_resource type="SphereMesh" id="SphereMesh_ifhsh"]
 material = SubResource("ShaderMaterial_11bjk")
@@ -351,21 +353,31 @@ shader_parameter/textureImage = ExtResource("41_6h6ah")
 points = PackedVector3Array(-11.9778, 0, -4.92872, -11.9778, -1.5231, -4.6875, -11.9778, 0, 4.92775, 11.9755, 0, -4.92872, -11.9778, -2.89712, -3.98794, 11.9755, -1.5231, -4.6875, -11.9778, -1.5231, 4.68653, 11.9755, 0, 4.92775, -11.9778, -3.98746, -2.8976, 11.9755, -2.89712, -3.98794, -11.9778, -2.89712, 3.98697, 11.9755, -1.5231, 4.68653, -11.9778, -4.68749, -1.52358, 11.9755, -3.98746, -2.8976, -11.9778, -3.98746, 2.89664, 11.9755, -2.89712, 3.98697, -11.9778, -4.92872, -1.43051e-06, 11.9755, -4.68749, -1.52358, -11.9778, -4.68749, 1.52261, 11.9755, -3.98746, 2.89664, 11.9755, -4.92872, -1.43051e-06, 11.9755, -4.68749, 1.52261)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_fqpw3"]
-viewport_path = NodePath("SubViewport")
+viewport_path = NodePath("SubViewportContainer/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4pkn3"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
-no_depth_test = true
 shading_mode = 0
 albedo_texture = SubResource("ViewportTexture_fqpw3")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_yif0j"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_4pkn3")
-size = Vector2(5, 3)
+size = Vector2(5.76, 3.24)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e1twf"]
+points = PackedVector3Array(-2.88, 0, -1.62, -2.88, 0, 1.62, 2.88, 0, -1.62, 2.88, 0, 1.62)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_17aju"]
+shading_mode = 0
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8ove1"]
+material = SubResource("StandardMaterial3D_17aju")
+size = Vector3(0.1, 0.1, 0.1)
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_cqorg")
@@ -402,15 +414,15 @@ skeleton = NodePath("../..")
 current = true
 
 [node name="PostProcess" type="MeshInstance3D" parent="MainCamera/XROrigin3D/XRCamera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -192)
 visible = false
 mesh = SubResource("QuadMesh_sw2bk")
 
 [node name="XRController3DRight" type="XRController3D" parent="MainCamera/XROrigin3D"]
 tracker = &"right_hand"
+pose = &"aim"
 
 [node name="Pivot" type="Node3D" parent="MainCamera/XROrigin3D/XRController3DRight"]
-transform = Transform3D(0.1, 0, 0, 0, 0.0258819, 0.0965926, 0, -0.0965926, 0.0258819, 0, 0, 0.0999985)
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 0, 0, 0.0999985)
 
 [node name="Skewer" type="MeshInstance3D" parent="MainCamera/XROrigin3D/XRController3DRight/Pivot"]
 transform = Transform3D(0.0999999, 0, 0, 0, 0.0999999, 0, 0, 0, 0.1, 0, 19.7, -8.74229e-08)
@@ -507,6 +519,9 @@ transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1024, 0)
 mesh = ExtResource("8_1pksx")
 skeleton = NodePath("../../../../../../..")
 surface_material_override/0 = SubResource("ShaderMaterial_7ujxe")
+
+[node name="rayCastTo" type="Node3D" parent="MainCamera/XROrigin3D/XRController3DRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
 
 [node name="Vegies" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -64)
@@ -710,14 +725,36 @@ bus = &"FX SlowMo"
 [node name="Music" type="AudioStreamPlayer" parent="."]
 script = ExtResource("45_qf52m")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="GUI" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GUI"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 61)
 mesh = SubResource("PlaneMesh_yif0j")
+skeleton = NodePath("../..")
+script = ExtResource("47_bls1o")
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GUI"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 61)
+shape = SubResource("ConvexPolygonShape3D_e1twf")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 disable_3d = true
 transparent_bg = true
-size = Vector2i(1000, 600)
+handle_input_locally = false
+size = Vector2i(1024, 1024)
+size_2d_override = Vector2i(1920, 1080)
+size_2d_override_stretch = true
+
+[node name="DEBUGCUBE" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 61)
+mesh = SubResource("BoxMesh_8ove1")
 
 [connection signal="input_event" from="Vegies/Aubergine" to="." method="_on_aubergine_input_event"]
 [connection signal="input_event" from="Vegies/Garlic" to="." method="_on_garlic_input_event"]

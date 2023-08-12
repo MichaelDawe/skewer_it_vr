@@ -74,7 +74,7 @@ func _process(_delta):
 
 func _on_menu_pressed():
 	var menu = preload("res://menu.tscn").instantiate()
-	get_node("/root/main").add_child(menu)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(menu)
 	queue_free()
 
 func format_seconds(s):

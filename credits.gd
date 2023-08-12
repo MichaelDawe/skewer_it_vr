@@ -13,11 +13,11 @@ func _process(_delta):
 
 func _on_back_pressed():
 	var options = preload("res://options.tscn").instantiate()
-	get_node("/root/main").add_child(options)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(options)
 	queue_free()
 
 
 func _on_licences_pressed():
 	var licences = preload("res://licences.tscn").instantiate()
-	get_node("/root/main").add_child(licences)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(licences)
 	queue_free()

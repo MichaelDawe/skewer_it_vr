@@ -91,7 +91,7 @@ func _ready():
 		file.close()
 	# open menu scene
 	var menu = preload("res://menu.tscn").instantiate()
-	$SubViewport.add_child(menu)
+	$SubViewportContainer/SubViewport.add_child(menu)
 	
 	# set up items for first spawn
 	for n in $Vegies.get_children():
@@ -99,7 +99,7 @@ func _ready():
 		# pass ratio to shader
 		n.get_child(0).get_active_material(0).set_shader_parameter("background", background)
 	# reset skewer to be hidden
-	$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.scale = Vector3(0.0, 0.0, 0.0)
+	#$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.scale = Vector3(0.0, 0.0, 0.0)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -122,7 +122,7 @@ func _process(delta):
 		# potentially wasteful way to do it, running every frame
 		if(backRed > 0.1):
 			if(catchYourBreath):
-				get_node("hud").catch_your_breath()
+				get_node("SubViewportContainer/SubViewport/hud").catch_your_breath()
 				$GoodFX.bus = "FX SlowMo"
 				$GrillFX.bus = "FX SlowMo"
 				$BadFX.bus = "FX SlowMo"
@@ -296,7 +296,7 @@ func quit_to_menu():
 	# reset speed
 	speedBoost = 1.0
 	# reset skewer to be hidden
-	$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.scale = Vector3(0.0, 0.0, 0.0)
+	#$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.scale = Vector3(0.0, 0.0, 0.0)
 	# more stuff copied from the top
 	bonus = 0.0 # score multiplier
 	caught = [0, 0, 0, 0, 0, 0] # list of objects already on skewer
@@ -314,7 +314,7 @@ func quit_to_menu():
 
 func play():
 	# render skewer
-	$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.scale = Vector3(0.1, 0.1, 0.1)
+	#$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.scale = Vector3(0.1, 0.1, 0.1)
 	# stats
 	# total game time
 	if(FileAccess.file_exists("user://gameTime.res")):
@@ -359,7 +359,7 @@ func play():
 			$MainCamera/XROrigin3D/XRCamera3D/PostProcess.visible = false
 		file.close()
 	speedBoost = speed / 10.0
-	get_node("hud").update_hud()
+	get_node("SubViewportContainer/SubViewport/hud").update_hud()
 	# check for first run after reset highscore
 	if(highscore < 0.5): highscoreBeat = true
 	
@@ -456,11 +456,11 @@ func wrong_piece():
 		mode = 0
 		# add game over screen
 		var game_over = preload("res://game_over.tscn").instantiate()
-		$SubViewport.add_child(game_over)
+		$SubViewportContainer/SubViewport.add_child(game_over)
 		# run the play script on the main scene
 		pause()
 		quit_to_menu()
-		get_node("hud").queue_free()
+		get_node("SubViewportContainer/SubViewport/hud").queue_free()
 	# reset skewer
 	for i in 6:
 		caught[i] = 0
@@ -483,12 +483,12 @@ func process_input(n, event):
 			else:
 				reset_vegie(n)
 				score_update(n)
-			get_node("hud").update_hud()
+			get_node("SubViewportContainer/SubViewport/hud").update_hud()
 			# flash screen when highscore beaten
 			if(int(score) > highscore and not highscoreBeat):
 				highscoreFlash += 1
 				highscoreBeat = true
-				get_node("hud").show_highscore()
+				get_node("SubViewportContainer/SubViewport/hud").show_highscore()
 				play_fx(7)
 
 func _on_aubergine_input_event(_camera, event, _position, _normal, _shape_idx):
@@ -581,6 +581,6 @@ func _on_grill_input_event(_camera, _event, _position, _normal, _shape_idx):
 		# reset tries:
 		if(health < 3.0): health += 0.25
 		play_fx(6)
-		get_node("hud").update_hud()
+		get_node("SubViewportContainer/SubViewport/hud").update_hud()
 		# stats
 		totalSkewers += 1
