@@ -32,5 +32,7 @@ void fragment() {
 	
 	col += ((1.0 - SCREEN_UV.y) * sparks * vec3(1.0, 0.4, 0.05));
 	
+	col = mix(col, vec3(0.0), max((pozition - 128.0) / 32.0, 0.0));
+	
 	ALBEDO = col;
 }

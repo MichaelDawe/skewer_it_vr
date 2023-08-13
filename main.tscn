@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://g54wi6rdpo70"]
+[gd_scene load_steps=103 format=3 uid="uid://g54wi6rdpo70"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_cqorg"]
 [ext_resource type="ArrayMesh" uid="uid://cc6iu6dpx7w14" path="res://models/Aubergine.obj" id="3_w2r1g"]
@@ -233,6 +233,10 @@ shader_parameter/damaged = null
 shader_parameter/sparks = null
 shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("35_1uplo")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_84m0g"]
+height = 10.0
+radius = 0.19
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wkfuj"]
 render_priority = 0
@@ -515,7 +519,7 @@ pose = &"aim"
 transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 0, 0, 0)
 
 [node name="Skewer" type="MeshInstance3D" parent="MainCamera/XROrigin3D/XRController3DRight/Pivot"]
-transform = Transform3D(0.0999999, 0, 0, 0, 0.0999999, 0, 0, 0, 0.1, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 mesh = ExtResource("34_m0car")
 skeleton = NodePath("../../../../..")
 surface_material_override/0 = SubResource("ShaderMaterial_1u1wv")
@@ -610,11 +614,17 @@ mesh = ExtResource("8_1pksx")
 skeleton = NodePath("../../../../../../..")
 surface_material_override/0 = SubResource("ShaderMaterial_7ujxe")
 
+[node name="Area3D" type="Area3D" parent="MainCamera/XROrigin3D/XRController3DRight/Pivot"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MainCamera/XROrigin3D/XRController3DRight/Pivot/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 2.84217e-14, 0, -2.84217e-14, 1, 0, 16, 6.9938e-07)
+shape = SubResource("CylinderShape3D_84m0g")
+
 [node name="rayCastTo" type="Node3D" parent="MainCamera/XROrigin3D/XRController3DRight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 
 [node name="Vegies" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -64)
+transform = Transform3D(0.083, 0, 0, 0, 0.083, 0, 0, 0, 0.083, 0, 0, 58)
 
 [node name="Aubergine" type="StaticBody3D" parent="Vegies"]
 metadata/number = 1
@@ -782,7 +792,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_hi0xi")
 shape = SubResource("ConvexPolygonShape3D_jwuss")
 
 [node name="Grill" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+transform = Transform3D(-4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, -1.8, -0.7, 64)
 
 [node name="Grill" type="MeshInstance3D" parent="Grill"]
 transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -791,7 +801,6 @@ skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("ShaderMaterial_8mp0h")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Grill"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_sthrf")
 
 [node name="GoodFX" type="AudioStreamPlayer" parent="."]
@@ -845,20 +854,5 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 61)
 mesh = SubResource("SphereMesh_58n1e")
 
-[connection signal="input_event" from="Vegies/Aubergine" to="." method="_on_aubergine_input_event"]
-[connection signal="input_event" from="Vegies/Garlic" to="." method="_on_garlic_input_event"]
-[connection signal="input_event" from="Vegies/Gerkin" to="." method="_on_gerkin_input_event"]
-[connection signal="input_event" from="Vegies/YellowPepper" to="." method="_on_yellow_pepper_input_event"]
-[connection signal="input_event" from="Vegies/Tomato" to="." method="_on_tomato_input_event"]
-[connection signal="input_event" from="Vegies/Tofu" to="." method="_on_tofu_input_event"]
-[connection signal="input_event" from="Vegies/Shallot" to="." method="_on_shallot_input_event"]
-[connection signal="input_event" from="Vegies/Sausage" to="." method="_on_sausage_input_event"]
-[connection signal="input_event" from="Vegies/RedPepper" to="." method="_on_red_pepper_input_event"]
-[connection signal="input_event" from="Vegies/Pineapple" to="." method="_on_pineapple_input_event"]
-[connection signal="input_event" from="Vegies/Olive" to="." method="_on_olive_input_event"]
-[connection signal="input_event" from="Vegies/Mushroom" to="." method="_on_mushroom_input_event"]
-[connection signal="input_event" from="Vegies/MarinatedTofu" to="." method="_on_marinated_tofu_input_event"]
-[connection signal="input_event" from="Vegies/Maize" to="." method="_on_maize_input_event"]
-[connection signal="input_event" from="Vegies/GreenPepper" to="." method="_on_green_pepper_input_event"]
-[connection signal="input_event" from="Grill" to="." method="_on_grill_input_event"]
+[connection signal="body_entered" from="MainCamera/XROrigin3D/XRController3DRight/Pivot/Area3D" to="." method="process_input"]
 [connection signal="finished" from="Music" to="Music" method="_on_finished"]

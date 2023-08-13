@@ -31,8 +31,6 @@ var backRed = 0.0
 var playTime = 0.0
 var finalSpeed = 1.0 	# combo of speedBoost and backRed for slow mo etc, 
 						# precalculated once per frame and used where required
-var grillAnim = false
-var grillAnimStop = false
 var skewerMouseActive = true # stops the mouse control for the skewer while its being animated
 var shaderTime = 0.0 # separate time for shader to seamlessly apply speed effects
 var audio = 2 # 0 = mute, 1 = fx only, 2 = fx and music
@@ -144,7 +142,6 @@ func _process(delta):
 		# 5 minutes between slow mo sessions and 30 seconds of slow mo
 		backRed = clamp((sin(((playTime - 165) / 165) * PI) - 0.9) * 8.0, 0.0, 0.6)
 		background = Vector3(backRed, 0.2, 0.6 - (backRed / 2.0))
-		#$MainCamera/Background.get_active_material(0).set_shader_parameter("background", background)
 		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("background", background)
 		# spawning counter
 		spawnNowQ += delta
@@ -157,7 +154,7 @@ func _process(delta):
 			var rotationMeta = n.get_meta("rotation")
 			if(n.get_meta("spawned")):
 				# update scale
-				n.get_child(0).scale += Vector3(0.025, 0.025, 0.025) * delta * finalSpeed
+				n.get_child(0).scale += Vector3(0.3, 0.3, 0.3) * delta * finalSpeed
 				# this line gets rid of the "det == 0" error and gives a little margin for error
 				n.scale = n.get_child(0).scale + Vector3(0.1, 0.1, 0.1)
 				# update position
@@ -169,19 +166,6 @@ func _process(delta):
 				
 				if(n.position.z > 160): # send objects home ('kill' them) # was 104
 					reset_vegie(n)
-		# process grill
-		if(grillAnim):
-			$Grill.position.z += 20 * delta * finalSpeed
-			$Grill/Grill.scale += Vector3(0.3, 0.3, 0.3) * delta * finalSpeed
-			$Grill/CollisionShape3D.scale = $Grill/Grill.scale + Vector3(0.1, 0.1, 0.1)
-			$Grill.rotation = Vector3(0.1, 0.0, 0.0)
-			if($Grill.position.z > 64):
-				if(grillAnimStop):
-					grillAnim = false
-					grillAnimStop = false
-				$Grill.position.z = 0
-				$Grill/Grill.scale = Vector3(0.0, 0.0, 0.0)
-				$Grill/CollisionShape3D.scale = Vector3(0.01, 0.01, 0.01)
 					
 		# spawn new item
 		if(spawnNowQ > spawnInterval / finalSpeed):
@@ -222,9 +206,9 @@ func play_fx(fx):
 func update_skewer():
 	for n in caughtPos:
 		var child = $MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_child(caught[caughtPos] - 1)
-		child.position.y = -80 + (caughtPos * 12)
+		child.position.y = 20 + (caughtPos * 20)
 		child.rotation = Vector3(0, randf(), 0)
-		child.scale = Vector3(1.0, 1.0, 1.0)
+		child.scale = Vector3(2.4, 2.4, 2.4)
 	
 func clear_skewer():
 	for n in $MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_children():
@@ -276,11 +260,7 @@ func pause():
 	save_stats()
 
 func quit_to_menu():
-	grillAnim = false
-	grillAnimStop = false
-	$Grill.position.z = 0
 	$Grill/Grill.scale = Vector3(0.0, 0.0, 0.0)
-	$Grill/CollisionShape3D.scale = Vector3(0.01, 0.01, 0.01)
 	# reset playtime to prevent starting in slow mode
 	playTime = 0
 	# reset everything.
@@ -312,6 +292,7 @@ func quit_to_menu():
 	sparks = 0
 
 func play():
+	$Grill/Grill.scale = Vector3(1.0, 1.0, 1.0)
 	# render skewer
 	#$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.scale = Vector3(0.1, 0.1, 0.1)
 	# stats
@@ -368,18 +349,18 @@ func reset_vegie(n):
 	n.scale = Vector3(0.1, 0.1, 0.1)
 	# spawn in random location
 	n.position.z = 0
-	var posX = (randf() - 0.5) * 4.58 #4.58 + 0.42 = 5
-	var posY = (randf() - 0.5) * 4.58
+	var posX = (randf() - 0.5) * 54
+	var posY = (randf() - 0.5) * 54
 	# add space in center for X
 	if(posX > 0.0):
-		posX += 0.42
+		posX += 3
 	else:
-		posX -= 0.42
+		posX -= 3
 	# add space in center for Y
 	if(posY > 0.0):
-		posY += 0.42
+		posY += 3
 	else:
-		posY -= 0.42
+		posY -= 3
 	# assign values
 	n.position.x = posX
 	n.position.y = posY
@@ -422,8 +403,6 @@ func score_update(n):
 				wrong_piece()
 				play_fx(0)
 			else:
-				if(caughtPos == 5):
-					grillAnim = true
 				# updates latest pick
 				caught[caughtPos] = number
 				score_add()
@@ -466,22 +445,30 @@ func wrong_piece():
 	# reset counter
 	caughtPos = 0
 	clear_skewer()
-	if(grillAnim): grillAnimStop = true
 	# stats
 	totalMistakes += 1
 
-func process_input(n, event):
-	if(event is InputEventMouse):
-		var nZ = n.position.z
-		if(nZ > 64): # and nZ < 96
-			# make it a bit easier to catch items when you want to without affecting when you don't want them
-			if(nZ > 108): #was 90
-				if(n.get_meta("number") not in caught and caughtPos < 5):
-					reset_vegie(n)
-					score_update(n)
-			else:
-				reset_vegie(n)
-				score_update(n)
+func process_input(n):
+	if mode == 1:
+		if n.name == "Grill":
+			if caughtPos == 5:
+				# clear skewer etc.
+				caughtPos = 0
+				for i in 6:
+					caught[i] = 0
+				
+				sparks += 1
+				bonus += 0.25 * (speed / 10.0)
+				clear_skewer()
+				# reset tries:
+				if(health < 3.0): health += 0.25
+				play_fx(6)
+				get_node("SubViewportContainer/SubViewport/hud").update_hud()
+				# stats
+				totalSkewers += 1
+		else:
+			reset_vegie(n)
+			score_update(n)
 			get_node("SubViewportContainer/SubViewport/hud").update_hud()
 			# flash screen when highscore beaten
 			if(int(score) > highscore and not highscoreBeat):
@@ -490,96 +477,98 @@ func process_input(n, event):
 				get_node("SubViewportContainer/SubViewport/hud").show_highscore()
 				play_fx(7)
 
-func _on_aubergine_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Aubergine
-		process_input(n, event)
 
-func _on_garlic_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Garlic
-		process_input(n, event)
-
-func _on_gerkin_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Gerkin
-		process_input(n, event)
-
-func _on_yellow_pepper_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/YellowPepper
-		process_input(n, event)
-
-func _on_tomato_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Tomato
-		process_input(n, event)
-
-func _on_tofu_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Tofu
-		process_input(n, event)
-
-func _on_shallot_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Shallot
-		process_input(n, event)
-
-func _on_sausage_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Sausage
-		process_input(n, event)
-
-func _on_red_pepper_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/RedPepper
-		process_input(n, event)
-
-func _on_pineapple_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Pineapple
-		process_input(n, event)
-
-func _on_olive_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Olive
-		process_input(n, event)
-
-func _on_mushroom_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Mushroom
-		process_input(n, event)
-
-func _on_marinated_tofu_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/MarinatedTofu
-		process_input(n, event)
-
-func _on_maize_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/Maize
-		process_input(n, event)
-
-func _on_green_pepper_input_event(_camera, event, _position, _normal, _shape_idx):
-	if(mode == 1):
-		var n = $Vegies/GreenPepper
-		process_input(n, event)
-
-func _on_grill_input_event(_camera, _event, _position, _normal, _shape_idx):
-	if(mode == 1 and caughtPos == 5 and $Grill.position.z > 32):
-		# stop grill after animation cycle
-		grillAnimStop = true
-		# clear skewer etc.
-		caughtPos = 0
-		for i in 6:
-			caught[i] = 0
-		#catch += 2 # may be temporary until sparks are in place, then drop to 1 or remove
-		sparks += 1
-		bonus += 0.25 * (speed / 10.0)
-		clear_skewer()
-		# reset tries:
-		if(health < 3.0): health += 0.25
-		play_fx(6)
-		get_node("SubViewportContainer/SubViewport/hud").update_hud()
-		# stats
-		totalSkewers += 1
+#
+#func _on_aubergine_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Aubergine
+#		process_input(n, event)
+#
+#func _on_garlic_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Garlic
+#		process_input(n, event)
+#
+#func _on_gerkin_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Gerkin
+#		process_input(n, event)
+#
+#func _on_yellow_pepper_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/YellowPepper
+#		process_input(n, event)
+#
+#func _on_tomato_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Tomato
+#		process_input(n, event)
+#
+#func _on_tofu_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Tofu
+#		process_input(n, event)
+#
+#func _on_shallot_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Shallot
+#		process_input(n, event)
+#
+#func _on_sausage_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Sausage
+#		process_input(n, event)
+#
+#func _on_red_pepper_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/RedPepper
+#		process_input(n, event)
+#
+#func _on_pineapple_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Pineapple
+#		process_input(n, event)
+#
+#func _on_olive_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Olive
+#		process_input(n, event)
+#
+#func _on_mushroom_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Mushroom
+#		process_input(n, event)
+#
+#func _on_marinated_tofu_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/MarinatedTofu
+#		process_input(n, event)
+#
+#func _on_maize_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/Maize
+#		process_input(n, event)
+#
+#func _on_green_pepper_input_event(_camera, event, _position, _normal, _shape_idx):
+#	if(mode == 1):
+#		var n = $Vegies/GreenPepper
+#		process_input(n, event)
+#
+#func _on_grill_input_event(_camera, _event, _position, _normal, _shape_idx):
+#	if(mode == 1 and caughtPos == 5 and $Grill.position.z > 32):
+#		# stop grill after animation cycle
+#		grillAnimStop = true
+#		# clear skewer etc.
+#		caughtPos = 0
+#		for i in 6:
+#			caught[i] = 0
+#		#catch += 2 # may be temporary until sparks are in place, then drop to 1 or remove
+#		sparks += 1
+#		bonus += 0.25 * (speed / 10.0)
+#		clear_skewer()
+#		# reset tries:
+#		if(health < 3.0): health += 0.25
+#		play_fx(6)
+#		get_node("SubViewportContainer/SubViewport/hud").update_hud()
+#		# stats
+#		totalSkewers += 1
