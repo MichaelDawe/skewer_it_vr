@@ -47,6 +47,44 @@ func _process(_delta):
 							node._on_play_pressed()
 						elif y > 770 and y < 858:
 							node._on_menu_pressed()
+				elif node.name == "options":
+					if x > 170 and x < 854:
+						if y > 146 and y < 234:
+							node._on_post_effects_pressed()
+						elif y > 238 and y < 326:
+							node._on_audio_pressed()
+						elif y > 330 and y < 418:
+							node._on_difficulty_pressed()
+						elif y > 422 and y < 510:
+							node._on_reset_score_pressed()
+						elif y > 514 and y < 602:
+							node._on_tutorial_pressed()
+						elif y > 606 and y < 694:
+							node._on_stats_pressed()
+						elif y > 698 and y < 786:
+							node._on_credits_pressed()
+						elif y > 790 and y < 878:
+							node._on_back_pressed()
+				elif node.name == "tutorial":
+					if x > 406 and x < 689:
+						if y > 756 and y < 844:
+							node._on_close_pressed()
+						elif y > 848 and y < 936:
+							node._on_menu_pressed()
+				elif node.name == "Stats":
+					if x > 370 and x < 653 and y > 785 and y < 973:
+						node._on_menu_pressed()
+				elif node.name == "credits":
+					if x > 434 and x < 590 and y > 665 and y < 702:
+						node._on_licences_pressed()
+					elif x > 383 and x < 640 and y > 821 and y < 909:
+						node._on_back_pressed()
+				elif node.name == "licences":
+					if y > 512:
+						if x > 162 and x < 445:
+							node._on_back_pressed()
+						elif x > 611 and x < 912:
+							node._on_next_pressed()
 				
 				justPressed = false
 		else:
