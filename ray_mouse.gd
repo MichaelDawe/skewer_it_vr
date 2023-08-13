@@ -124,3 +124,5 @@ func _process(_delta):
 				justPressed = false
 		else:
 			justPressed = true
+	else:
+		$"../../Pointer".position.z = 9999

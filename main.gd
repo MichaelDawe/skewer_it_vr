@@ -37,6 +37,7 @@ var skewerMouseActive = true # stops the mouse control for the skewer while its 
 var shaderTime = 0.0 # separate time for shader to seamlessly apply speed effects
 var audio = 2 # 0 = mute, 1 = fx only, 2 = fx and music
 var catchYourBreath = false
+var postProcess = false
 # stats
 var totalGameTime = 0.0
 var maxBonus = 0.0
@@ -61,8 +62,6 @@ func _ready():
 		get_viewport().use_xr = true
 	else:
 		print("OpenXR not initialized, please check if your headset is connected")
-	# pass screen size to the post process shader
-	$MainCamera/XROrigin3D/XRCamera3D/PostProcess.get_active_material(0).set_shader_parameter("screenSize", Vector2(get_viewport().size.x, get_viewport().size.y))
 	# set audio mode.
 	if(FileAccess.file_exists("user://audio.res")):
 		var file = FileAccess.open("user://audio.res", FileAccess.READ)
@@ -77,7 +76,7 @@ func _ready():
 	if(FileAccess.file_exists("user://posteffects.res")):
 		var file = FileAccess.open("user://posteffects.res", FileAccess.READ)
 		if(file.get_8() == 1):
-			$MainCamera/XROrigin3D/XRCamera3D/PostProcess.visible = true
+			postProcess = true
 		file.close()
 	else:
 		var file = FileAccess.open("user://posteffects.res", FileAccess.WRITE)
@@ -158,7 +157,7 @@ func _process(delta):
 			var rotationMeta = n.get_meta("rotation")
 			if(n.get_meta("spawned")):
 				# update scale
-				n.get_child(0).scale += Vector3(0.3, 0.3, 0.3) * delta * finalSpeed
+				n.get_child(0).scale += Vector3(0.025, 0.025, 0.025) * delta * finalSpeed
 				# this line gets rid of the "det == 0" error and gives a little margin for error
 				n.scale = n.get_child(0).scale + Vector3(0.1, 0.1, 0.1)
 				# update position
@@ -168,7 +167,7 @@ func _process(delta):
 				n.rotate(Vector3(0, 1, 0), rotationMeta[1] * delta * finalSpeed)
 				n.rotate(Vector3(0, 0, 1), rotationMeta[2] * delta * finalSpeed)
 				
-				if(n.position.z > 128): # send objects home ('kill' them) # was 104
+				if(n.position.z > 160): # send objects home ('kill' them) # was 104
 					reset_vegie(n)
 		# process grill
 		if(grillAnim):
@@ -193,17 +192,17 @@ func _process(delta):
 			spawnNowQ = 0.0
 		
 	# process shader effects
-	if($MainCamera/XROrigin3D/XRCamera3D/PostProcess.visible):
-		$MainCamera/XROrigin3D/XRCamera3D/PostProcess.get_active_material(0).set_shader_parameter("catch", catch)
+	if(postProcess):
+		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("catch", catch)
 		if(catch > 0.0): catch -= delta * 2
 		else: catch = 0.0
-		$MainCamera/XROrigin3D/XRCamera3D/PostProcess.get_active_material(0).set_shader_parameter("damaged", damaged)
+		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("damaged", damaged)
 		if(damaged > 0.0): damaged -= delta * 2
 		else: damaged = 0.0
-		$MainCamera/XROrigin3D/XRCamera3D/PostProcess.get_active_material(0).set_shader_parameter("sparks", sparks)
+		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("sparks", sparks)
 		if(sparks > 0.0): sparks -= delta
 		else: sparks = 0.0
-		$MainCamera/XROrigin3D/XRCamera3D/PostProcess.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
+		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
 		if(highscoreFlash > 0.0): highscoreFlash -= delta
 		else: highscoreFlash = 0.0
 
@@ -354,9 +353,9 @@ func play():
 	if(FileAccess.file_exists("user://posteffects.res")):
 		var file = FileAccess.open("user://posteffects.res", FileAccess.READ)
 		if(file.get_8() == 1):
-			$MainCamera/XROrigin3D/XRCamera3D/PostProcess.visible = true
+			postProcess = true
 		else:
-			$MainCamera/XROrigin3D/XRCamera3D/PostProcess.visible = false
+			postProcess = false
 		file.close()
 	speedBoost = speed / 10.0
 	get_node("SubViewportContainer/SubViewport/hud").update_hud()
@@ -369,18 +368,18 @@ func reset_vegie(n):
 	n.scale = Vector3(0.1, 0.1, 0.1)
 	# spawn in random location
 	n.position.z = 0
-	var posX = (randf() * 55) - 30 #55 + 5 = 60
-	var posY = (randf() * 55) - 30
+	var posX = (randf() - 0.5) * 4.58 #4.58 + 0.42 = 5
+	var posY = (randf() - 0.5) * 4.58
 	# add space in center for X
 	if(posX > 0.0):
-		posX += 5
+		posX += 0.42
 	else:
-		posX -= 5
+		posX -= 0.42
 	# add space in center for Y
 	if(posY > 0.0):
-		posY += 5
+		posY += 0.42
 	else:
-		posY -= 5
+		posY -= 0.42
 	# assign values
 	n.position.x = posX
 	n.position.y = posY

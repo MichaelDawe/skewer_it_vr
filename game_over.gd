@@ -20,7 +20,7 @@ func _process(_delta):
 func _on_play_pressed():
 	# load the hud scene
 	var hud = preload("res://hud.tscn").instantiate()
-	get_node("/root/main").add_child(hud)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(hud)
 	# set main scene into play mode
 	get_node("/root/main").mode = 1
 	# run the play script on the main scene
@@ -31,5 +31,5 @@ func _on_play_pressed():
 
 func _on_menu_pressed():
 	var menu = preload("res://menu.tscn").instantiate()
-	get_node("/root/main").add_child(menu)
+	get_node("/root/main/SubViewportContainer/SubViewport").add_child(menu)
 	queue_free()

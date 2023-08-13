@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=3 uid="uid://g54wi6rdpo70"]
+[gd_scene load_steps=102 format=3 uid="uid://g54wi6rdpo70"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_cqorg"]
 [ext_resource type="ArrayMesh" uid="uid://cc6iu6dpx7w14" path="res://models/Aubergine.obj" id="3_w2r1g"]
@@ -35,7 +35,6 @@
 [ext_resource type="ArrayMesh" uid="uid://1nhv3lxo1dqm" path="res://models/skewer.obj" id="34_m0car"]
 [ext_resource type="Texture2D" uid="uid://ea7gb7atcdnx" path="res://textures/GreenPepper.png" id="35_1uplo"]
 [ext_resource type="Shader" path="res://shaders/skewer.gdshader" id="35_ar3l0"]
-[ext_resource type="Shader" path="res://shaders/post.gdshader" id="38_reqji"]
 [ext_resource type="Texture2D" uid="uid://pfyulex635us" path="res://textures/Skewer.png" id="38_v6ba4"]
 [ext_resource type="ArrayMesh" uid="uid://bts60bvh81d6v" path="res://models/Grill.obj" id="39_xar4n"]
 [ext_resource type="Shader" path="res://shaders/grill.gdshader" id="40_1xt65"]
@@ -43,36 +42,31 @@
 [ext_resource type="AudioStream" uid="uid://bfo21jte7hum3" path="res://sounds/pluck.mp3" id="42_r2n88"]
 [ext_resource type="AudioStream" uid="uid://dmyk352cqu076" path="res://sounds/highscore.mp3" id="43_6cv70"]
 [ext_resource type="AudioStream" uid="uid://caeudvnb0w8lq" path="res://sounds/bad.mp3" id="44_f4r3q"]
+[ext_resource type="Shader" path="res://shaders/pointer.gdshader" id="45_1rigm"]
 [ext_resource type="Script" path="res://Music.gd" id="45_qf52m"]
 [ext_resource type="Script" path="res://ray_mouse.gd" id="47_bls1o"]
-[ext_resource type="Shader" path="res://pointer.gdshader" id="48_pbk5j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_11bjk"]
 render_priority = 0
 shader = ExtResource("4_j508n")
 shader_parameter/background = Vector3(0, 0.2, 0.6)
 shader_parameter/t = null
-
-[sub_resource type="SphereMesh" id="SphereMesh_ifhsh"]
-material = SubResource("ShaderMaterial_11bjk")
-flip_faces = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ac0uo"]
-render_priority = 0
-shader = ExtResource("38_reqji")
 shader_parameter/catch = 0.0
 shader_parameter/damaged = 0.0
 shader_parameter/sparks = 0.0
 shader_parameter/highscore = 0.0
 
-[sub_resource type="QuadMesh" id="QuadMesh_sw2bk"]
-material = SubResource("ShaderMaterial_ac0uo")
+[sub_resource type="SphereMesh" id="SphereMesh_ifhsh"]
+material = SubResource("ShaderMaterial_11bjk")
 flip_faces = true
-size = Vector2(2, 2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1u1wv"]
 render_priority = 0
 shader = ExtResource("35_ar3l0")
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("38_v6ba4")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7luey"]
@@ -80,6 +74,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("7_70c85")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_26wns"]
@@ -87,6 +85,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("9_1tong")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sm546"]
@@ -94,6 +96,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("11_rsvxd")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uma4d"]
@@ -101,6 +107,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("13_wjnw2")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rikrp"]
@@ -108,6 +118,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("15_eo4ej")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ucnn4"]
@@ -115,6 +129,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("17_rgn0q")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3dvna"]
@@ -122,6 +140,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("19_7kjtb")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fwq41"]
@@ -129,6 +151,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("21_wji5u")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ixesn"]
@@ -136,6 +162,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("23_4vmwn")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_evo2i"]
@@ -143,6 +173,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("25_1dtoe")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h3rkl"]
@@ -150,6 +184,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("27_dwxgl")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y383v"]
@@ -157,6 +195,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("29_2a5td")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_krkux"]
@@ -164,6 +206,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = 0.0
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("31_m55th")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_olte6"]
@@ -171,6 +217,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("33_d8ax2")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7ujxe"]
@@ -178,6 +228,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("35_1uplo")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wkfuj"]
@@ -185,6 +239,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("7_70c85")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_uhewm"]
@@ -195,6 +253,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("9_1tong")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6a6ey"]
@@ -205,6 +267,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("11_rsvxd")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sv34w"]
@@ -215,6 +281,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("13_wjnw2")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dqffi"]
@@ -225,6 +295,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("15_eo4ej")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fp44m"]
@@ -235,6 +309,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("17_rgn0q")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jdmm3"]
@@ -245,6 +323,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("19_7kjtb")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xxf6v"]
@@ -255,6 +337,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("21_wji5u")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_eded1"]
@@ -265,6 +351,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("23_4vmwn")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6n3sy"]
@@ -275,6 +365,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("25_1dtoe")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_j3t1m"]
@@ -285,6 +379,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("27_dwxgl")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2ucec"]
@@ -295,6 +393,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("29_2a5td")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_c1d52"]
@@ -305,6 +407,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = 70.49
 shader_parameter/background = Vector3(0, 0.185, 0.695)
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("31_m55th")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0oguj"]
@@ -315,6 +421,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("33_d8ax2")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7r28p"]
@@ -325,6 +435,10 @@ render_priority = 0
 shader = ExtResource("4_6g46a")
 shader_parameter/pozition = null
 shader_parameter/background = null
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("35_1uplo")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jwuss"]
@@ -333,6 +447,10 @@ points = PackedVector3Array(4.08604, -0.270897, -3.2337, 3.88442, -1.55716, -3.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8mp0h"]
 render_priority = 0
 shader = ExtResource("40_1xt65")
+shader_parameter/catch = null
+shader_parameter/damaged = null
+shader_parameter/sparks = null
+shader_parameter/highscore = null
 shader_parameter/textureImage = ExtResource("41_6h6ah")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sthrf"]
@@ -359,7 +477,7 @@ points = PackedVector3Array(-2.88, 0, -1.62, -2.88, 0, 1.62, 2.88, 0, -1.62, 2.8
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v5plm"]
 render_priority = 0
-shader = ExtResource("48_pbk5j")
+shader = ExtResource("45_1rigm")
 
 [sub_resource type="SphereMesh" id="SphereMesh_58n1e"]
 material = SubResource("ShaderMaterial_v5plm")
@@ -389,19 +507,15 @@ skeleton = NodePath("../..")
 [node name="XRCamera3D" type="XRCamera3D" parent="MainCamera/XROrigin3D"]
 current = true
 
-[node name="PostProcess" type="MeshInstance3D" parent="MainCamera/XROrigin3D/XRCamera3D"]
-visible = false
-mesh = SubResource("QuadMesh_sw2bk")
-
 [node name="XRController3DRight" type="XRController3D" parent="MainCamera/XROrigin3D"]
 tracker = &"right_hand"
 pose = &"aim"
 
 [node name="Pivot" type="Node3D" parent="MainCamera/XROrigin3D/XRController3DRight"]
-transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 0, 0, 0.0999985)
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 0, 0, 0)
 
 [node name="Skewer" type="MeshInstance3D" parent="MainCamera/XROrigin3D/XRController3DRight/Pivot"]
-transform = Transform3D(0.0999999, 0, 0, 0, 0.0999999, 0, 0, 0, 0.1, 0, 19.7, -8.74229e-08)
+transform = Transform3D(0.0999999, 0, 0, 0, 0.0999999, 0, 0, 0, 0.1, 0, 0, 0)
 mesh = ExtResource("34_m0car")
 skeleton = NodePath("../../../../..")
 surface_material_override/0 = SubResource("ShaderMaterial_1u1wv")
@@ -497,7 +611,7 @@ skeleton = NodePath("../../../../../../..")
 surface_material_override/0 = SubResource("ShaderMaterial_7ujxe")
 
 [node name="rayCastTo" type="Node3D" parent="MainCamera/XROrigin3D/XRController3DRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 
 [node name="Vegies" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -64)
