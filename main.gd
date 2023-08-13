@@ -80,7 +80,7 @@ func _ready():
 		var file = FileAccess.open("user://posteffects.res", FileAccess.WRITE)
 		file.store_8(1)
 		file.close()
-		$MainCamera/XROrigin3D/XRCamera3D/PostProcess.visible = true
+		postProcess = true
 	# read difficutly from file
 	if(FileAccess.file_exists("user://speed.res")):
 		var file = FileAccess.open("user://speed.res", FileAccess.READ)
@@ -177,16 +177,40 @@ func _process(delta):
 		
 	# process shader effects
 	if(postProcess):
-		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("catch", catch)
+		$MainCamera/Background.get_active_material(0).set_shader_parameter("catch", catch)
+		$Grill/Grill.get_active_material(0).set_shader_parameter("catch", catch)
+		$Skewer.get_active_material(0).set_shader_parameter("catch", catch)
+		for n in $Skewer.get_children():
+			n.get_active_material(0).set_shader_parameter("catch", catch)
+		for n in $Vegies.get_children():
+			n.get_child(0).get_active_material(0).set_shader_parameter("catch", catch)
 		if(catch > 0.0): catch -= delta * 2
 		else: catch = 0.0
-		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("damaged", damaged)
+		$MainCamera/Background.get_active_material(0).set_shader_parameter("damaged", damaged)
+		$Grill/Grill.get_active_material(0).set_shader_parameter("damaged", damaged)
+		$Skewer.get_active_material(0).set_shader_parameter("damaged", damaged)
+		for n in $Skewer.get_children():
+			n.get_active_material(0).set_shader_parameter("damaged", damaged)
+		for n in $Vegies.get_children():
+			n.get_child(0).get_active_material(0).set_shader_parameter("damaged", damaged)
 		if(damaged > 0.0): damaged -= delta * 2
 		else: damaged = 0.0
-		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("sparks", sparks)
+		$MainCamera/Background.get_active_material(0).set_shader_parameter("sparks", sparks)
+		$Grill/Grill.get_active_material(0).set_shader_parameter("sparks", sparks)
+		$Skewer.get_active_material(0).set_shader_parameter("sparks", sparks)
+		for n in $Skewer.get_children():
+			n.get_active_material(0).set_shader_parameter("sparks", sparks)
+		for n in $Vegies.get_children():
+			n.get_child(0).get_active_material(0).set_shader_parameter("sparks", sparks)
 		if(sparks > 0.0): sparks -= delta
 		else: sparks = 0.0
-		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
+		$MainCamera/Background.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
+		$Grill/Grill.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
+		$Skewer.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
+		for n in $Skewer.get_children():
+			n.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
+		for n in $Vegies.get_children():
+			n.get_child(0).get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
 		if(highscoreFlash > 0.0): highscoreFlash -= delta
 		else: highscoreFlash = 0.0
 

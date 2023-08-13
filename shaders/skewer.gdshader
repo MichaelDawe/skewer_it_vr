@@ -9,7 +9,8 @@ uniform float sparks;
 uniform float highscore;
 
 void fragment() {
-	vec3 col = texture(textureImage, UV).rgb * (((NORMAL.x + NORMAL.y) / 2.0) - 1.0);
+	vec3 col = texture(textureImage, UV).rgb;
+	col *= abs((NORMAL.x + NORMAL.y) / 2.0 - 1.0) * 0.7;
 	
 	vec2 uv = SCREEN_UV * (1.0 - SCREEN_UV.yx); //vec2(1.0)- uv.yx; -> 1.-u.yx; Thanks FabriceNeyret !
 	float vig = 1.0 - (uv.x*uv.y * 16.0); //multiply with sth for intensity

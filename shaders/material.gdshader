@@ -16,10 +16,10 @@ void fragment() {
 	NORMAL *= NORMAL;
 	
 	vec3 col = texture(textureImage, UV).rgb;
-	col *= (vec3(0.7, 0.55, 0.25) * NORMAL.z) + vec3(0.35, 0.4, 0.5);
+	col *= abs((vec3(0.7, 0.55, 0.25) * NORMAL.z) + vec3(0.35, 0.4, 0.5));
 	
 //	if(pozition > 64.0) {
-//		col += background * ((1.0 - NORMAL.z) * ((pozition - 64.0) / 32.0));
+//		col += background * abs((1.0 - NORMAL.z) * ((pozition - 64.0) / 32.0));
 //	}
 	
 	vec2 uv = SCREEN_UV * (1.0 - SCREEN_UV.yx); //vec2(1.0)- uv.yx; -> 1.-u.yx; Thanks FabriceNeyret !
