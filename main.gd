@@ -68,7 +68,6 @@ func _ready():
 	# get screen aspect ratio as a float e.g. 1.777... for a 16 / 9 display
 	ratio = float(get_viewport().size.x) / float(get_viewport().size.y)
 	# set shader background
-	# $MainCamera/Background.get_active_material(0).set_shader_parameter("background", background)
 	$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("background", background)
 	# enable / dissable post effects
 	if(FileAccess.file_exists("user://posteffects.res")):
@@ -105,7 +104,6 @@ func _process(delta):
 	finalSpeed = speedBoost / (1.0 + (backRed * 3)) # makes game slow to almost 1/3 speed at slowest point.
 	# assign speed for stars
 	shaderTime += delta * 0.015 * finalSpeed
-	#$MainCamera/Background.get_active_material(0).set_shader_parameter("t", shaderTime)
 	$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("t", shaderTime)
 	# mouse positions
 	mouseX = get_viewport().get_mouse_position().x + 1
@@ -177,37 +175,37 @@ func _process(delta):
 		
 	# process shader effects
 	if(postProcess):
-		$MainCamera/Background.get_active_material(0).set_shader_parameter("catch", catch)
+		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("catch", catch)
 		$Grill/Grill.get_active_material(0).set_shader_parameter("catch", catch)
-		$Skewer.get_active_material(0).set_shader_parameter("catch", catch)
-		for n in $Skewer.get_children():
+		$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_active_material(0).set_shader_parameter("catch", catch)
+		for n in $MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_children():
 			n.get_active_material(0).set_shader_parameter("catch", catch)
 		for n in $Vegies.get_children():
 			n.get_child(0).get_active_material(0).set_shader_parameter("catch", catch)
 		if(catch > 0.0): catch -= delta * 2
 		else: catch = 0.0
-		$MainCamera/Background.get_active_material(0).set_shader_parameter("damaged", damaged)
+		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("damaged", damaged)
 		$Grill/Grill.get_active_material(0).set_shader_parameter("damaged", damaged)
-		$Skewer.get_active_material(0).set_shader_parameter("damaged", damaged)
-		for n in $Skewer.get_children():
+		$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_active_material(0).set_shader_parameter("damaged", damaged)
+		for n in $MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_children():
 			n.get_active_material(0).set_shader_parameter("damaged", damaged)
 		for n in $Vegies.get_children():
 			n.get_child(0).get_active_material(0).set_shader_parameter("damaged", damaged)
 		if(damaged > 0.0): damaged -= delta * 2
 		else: damaged = 0.0
-		$MainCamera/Background.get_active_material(0).set_shader_parameter("sparks", sparks)
+		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("sparks", sparks)
 		$Grill/Grill.get_active_material(0).set_shader_parameter("sparks", sparks)
-		$Skewer.get_active_material(0).set_shader_parameter("sparks", sparks)
-		for n in $Skewer.get_children():
+		$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_active_material(0).set_shader_parameter("sparks", sparks)
+		for n in $MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_children():
 			n.get_active_material(0).set_shader_parameter("sparks", sparks)
 		for n in $Vegies.get_children():
 			n.get_child(0).get_active_material(0).set_shader_parameter("sparks", sparks)
 		if(sparks > 0.0): sparks -= delta
 		else: sparks = 0.0
-		$MainCamera/Background.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
+		$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
 		$Grill/Grill.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
-		$Skewer.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
-		for n in $Skewer.get_children():
+		$MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
+		for n in $MainCamera/XROrigin3D/XRController3DRight/Pivot/Skewer.get_children():
 			n.get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
 		for n in $Vegies.get_children():
 			n.get_child(0).get_active_material(0).set_shader_parameter("highscore", highscoreFlash)
@@ -289,7 +287,6 @@ func quit_to_menu():
 	playTime = 0
 	# reset everything.
 	background = backgroundMain
-	#$MainCamera/Background.get_active_material(0).set_shader_parameter("background", background)
 	$MainCamera/BackgroundSpherical.get_active_material(0).set_shader_parameter("background", background)
 	# reset highscoreBeat
 	highscoreBeat = false
