@@ -1,8 +1,6 @@
-[gd_scene load_steps=109 format=3 uid="uid://g54wi6rdpo70"]
+[gd_scene load_steps=105 format=3 uid="uid://g54wi6rdpo70"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_cqorg"]
-[ext_resource type="Shader" path="res://shaders/background.gdshader" id="2_vwy7a"]
-[ext_resource type="Script" path="res://Background.gd" id="3_pwabm"]
 [ext_resource type="ArrayMesh" uid="uid://cc6iu6dpx7w14" path="res://models/Aubergine.obj" id="3_w2r1g"]
 [ext_resource type="Shader" path="res://shaders/material.gdshader" id="4_6g46a"]
 [ext_resource type="Shader" path="res://shaders/spherical_background.gdshader" id="4_j508n"]
@@ -47,17 +45,7 @@
 [ext_resource type="AudioStream" uid="uid://caeudvnb0w8lq" path="res://sounds/bad.mp3" id="44_f4r3q"]
 [ext_resource type="Script" path="res://Music.gd" id="45_qf52m"]
 [ext_resource type="Script" path="res://ray_mouse.gd" id="47_bls1o"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qbt2q"]
-render_priority = 0
-shader = ExtResource("2_vwy7a")
-shader_parameter/background = Vector3(0, 0.2, 0.6)
-shader_parameter/t = null
-
-[sub_resource type="QuadMesh" id="QuadMesh_gmgvh"]
-material = SubResource("ShaderMaterial_qbt2q")
-flip_faces = true
-size = Vector2(2, 2)
+[ext_resource type="Shader" path="res://pointer.gdshader" id="48_pbk5j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_11bjk"]
 render_priority = 0
@@ -68,8 +56,6 @@ shader_parameter/t = null
 [sub_resource type="SphereMesh" id="SphereMesh_ifhsh"]
 material = SubResource("ShaderMaterial_11bjk")
 flip_faces = true
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_q41w5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ac0uo"]
 render_priority = 0
@@ -371,13 +357,16 @@ size = Vector2(5.76, 3.24)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e1twf"]
 points = PackedVector3Array(-2.88, 0, -1.62, -2.88, 0, 1.62, 2.88, 0, -1.62, 2.88, 0, 1.62)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_17aju"]
-shading_mode = 0
-albedo_color = Color(1, 0, 1, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v5plm"]
+render_priority = 0
+shader = ExtResource("48_pbk5j")
 
-[sub_resource type="BoxMesh" id="BoxMesh_8ove1"]
-material = SubResource("StandardMaterial3D_17aju")
-size = Vector3(0.1, 0.1, 0.1)
+[sub_resource type="SphereMesh" id="SphereMesh_58n1e"]
+material = SubResource("ShaderMaterial_v5plm")
+radius = 0.02
+height = 0.04
+radial_segments = 8
+rings = 4
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_cqorg")
@@ -390,22 +379,9 @@ fov = 55.0
 near = 0.1
 far = 256.0
 
-[node name="Background" type="MeshInstance3D" parent="MainCamera"]
-transform = Transform3D(100, 0, 0, 0, -100, 8.74228e-06, 0, -8.74228e-06, -100, 0, 0, -192)
-visible = false
-mesh = SubResource("QuadMesh_gmgvh")
-skeleton = NodePath("../..")
-script = ExtResource("3_pwabm")
-
 [node name="BackgroundSpherical" type="MeshInstance3D" parent="MainCamera"]
 transform = Transform3D(1000, 0, 0, 0, -1000, 0.000150996, 0, -0.000150996, -1000, 0, 0, 0)
 mesh = SubResource("SphereMesh_ifhsh")
-skeleton = NodePath("../..")
-
-[node name="HitPlane" type="MeshInstance3D" parent="MainCamera"]
-transform = Transform3D(33.036, 0, 0, 0, -1.44405e-06, -33.036, 0, 33.036, -1.44405e-06, 0, 0, -64)
-visible = false
-mesh = SubResource("PlaneMesh_q41w5")
 skeleton = NodePath("../..")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="MainCamera"]
@@ -751,10 +727,11 @@ handle_input_locally = false
 size = Vector2i(1024, 1024)
 size_2d_override = Vector2i(1920, 1080)
 size_2d_override_stretch = true
+render_target_update_mode = 4
 
-[node name="DEBUGCUBE" type="MeshInstance3D" parent="."]
+[node name="Pointer" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 61)
-mesh = SubResource("BoxMesh_8ove1")
+mesh = SubResource("SphereMesh_58n1e")
 
 [connection signal="input_event" from="Vegies/Aubergine" to="." method="_on_aubergine_input_event"]
 [connection signal="input_event" from="Vegies/Garlic" to="." method="_on_garlic_input_event"]

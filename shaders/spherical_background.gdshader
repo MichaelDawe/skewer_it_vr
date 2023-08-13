@@ -29,14 +29,14 @@ void fragment() {
     float layers = 6.0;
     float scale = 25.0;
 	
-	float stars;
-    float depth;
-    vec2 index;
-	vec2 uv;
-    vec2 seed;
-    vec2 local_uv;
-    vec2 pos;
-    float phase;
+	float stars = 0.0;
+    float depth = 0.0;
+    vec2 index = vec2(0.0);
+	vec2 uv = vec2(0.0);
+    vec2 seed = vec2(0.0);
+    vec2 local_uv = vec2(0.0);
+    vec2 pos = vec2(0.0);
+    float phase = 0.0;
 	
 	for(float i = 0.0; i < layers; i++)
 	{
@@ -75,6 +75,5 @@ void fragment() {
 	vec3 backgroundViged = background * vig;
 	
 	vec3 col = (vec3(mix(0.0, stars, min(max(vertsPos.z, 0.0) * 2.0, 1.0))) * (1.0 - backgroundViged)) + backgroundViged * (vertsPos.z + 0.5);
-	// DEBUG
 	ALBEDO = col;
 }

@@ -23,9 +23,10 @@ config/icon="res://textures/icon.png"
 
 window/size/viewport_width=1024
 window/size/viewport_height=1024
+window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
-window/handheld/orientation=4
+window/vsync/vsync_mode=0
 
 [editor]
 

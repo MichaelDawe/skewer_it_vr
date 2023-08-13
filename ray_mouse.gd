@@ -11,6 +11,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	# All this is badly hardcoded, don't learn from it haha :)
 	from = $"../../MainCamera/XROrigin3D/XRController3DRight".global_position
 	to = $"../../MainCamera/XROrigin3D/XRController3DRight/rayCastTo".global_position
 	var space_state = get_world_3d().direct_space_state
@@ -19,29 +20,34 @@ func _process(_delta):
 	if result and result.collider == $"..":
 		var x = ((result.position.x / 5.76) + 0.5) * 1024
 		var y = ((-(result.position.y / 3.24)) + 0.5) * 1024
-		Input.warp_mouse(Vector2(x, y))
-		$"../../DEBUGCUBE".position = result.position
+		$"../../Pointer".global_position = result.position
 		if $"../../MainCamera/XROrigin3D/XRController3DRight".is_button_pressed("trigger_click"):
 			if justPressed:
-				var event = InputEventMouseButton.new()
-				event.position = Vector2(x, y)
-				event.set_button_index(MOUSE_BUTTON_LEFT)
-				event.set_pressed(true)
-				event.set_button_mask(MOUSE_BUTTON_LEFT)
-				Input.parse_input_event(event)
-				
-				event = InputEventMouseButton.new()
-				event.position = Vector2(x, y)
-				event.set_button_index(MOUSE_BUTTON_LEFT)
-				event.set_pressed(false)
-				event.set_button_mask(0)
-				Input.parse_input_event(event)
+				var node = $"../../SubViewportContainer/SubViewport".get_child(0)
+				if node.name == "menu":
+					if x > 302 and x < 721:
+						if y > 595 and y < 683:
+							node._on_play_pressed()
+						elif y > 687 and y < 775:
+							node._on_options_pressed()
+						elif y > 779 and y < 867:
+							node._on_quit_pressed()
+				elif node.name == "hud":
+					if x > 767 and y < 110:
+						node._on_pause_pressed()
+				elif node.name == "pause":
+					if x > 314 and x < 710:
+						if y > 603 and y < 691:
+							node._on_resume_pressed()
+						elif y > 695 and y < 783:
+							node._on_menu_pressed()
+				elif node.name == "game_over":
+					if x > 370 and x < 653:
+						if y > 678 and y < 766:
+							node._on_play_pressed()
+						elif y > 770 and y < 858:
+							node._on_menu_pressed()
 				
 				justPressed = false
 		else:
 			justPressed = true
-
-func _input(event):
-	# Mouse in viewport coordinates.
-	if event is InputEventMouseButton:
-		print(event)
