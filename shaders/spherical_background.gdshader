@@ -73,15 +73,14 @@ void fragment() {
 		stars += pow(abs(1.0 - length(local_uv - pos)), 80.0 + 20.0 * sin(phase + 8.0 * TIME)) * min(1.0, depth * 2.0);
 	}
 	
+	float noise = 0.0;
+	
+	noise += (random(UV * TIME) * 0.15) - 0.075;
+	
+	vec3 col = (vec3(mix(0.0, stars, min(max(vertsPos.z, 0.0) * 2.0, 1.0))) * (1.0 - background)) + background * (vertsPos.z + 0.5 + noise);
+	
 	uv = SCREEN_UV * (1.0 - SCREEN_UV.yx); //vec2(1.0)- uv.yx; -> 1.-u.yx; Thanks FabriceNeyret !
-	float vig = uv.x*uv.y * 10.0; //multiply with sth for intensity
-	vig = pow(vig, 0.5) + 0.5; //change pow for modifying the extend of the  vignette
-	
-	vec3 backgroundViged = background * vig;
-	
-	vec3 col = (vec3(mix(0.0, stars, min(max(vertsPos.z, 0.0) * 2.0, 1.0))) * (1.0 - backgroundViged)) + backgroundViged * (vertsPos.z + 0.5);
-	
-	vig = 1.0 - (uv.x*uv.y * 16.0); //multiply with sth for intensity
+	float vig = 1.0 - (uv.x*uv.y * 16.0); //multiply with sth for intensity
 	vig = pow(vig, 0.5);
 	
 	col *= 1.0 + (catch * vig);
